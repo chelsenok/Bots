@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class Controller {
 
+    object Si {
+        lateinit var line: String
+    }
+
     @RequestMapping(value = "/", method = arrayOf(RequestMethod.GET))
     @ResponseBody
     fun hello(): Dto {
