@@ -1,8 +1,8 @@
 package com.chelsenok.bots.repositories
 
-import com.chelsenok.bots.entities.Person
+import com.chelsenok.bots.entities.Video
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface Repository : CrudRepository<Person, Int>
+interface VideoRepository : CrudRepository<Video, String>
