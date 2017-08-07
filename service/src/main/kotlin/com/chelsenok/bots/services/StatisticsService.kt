@@ -6,7 +6,7 @@ import com.chelsenok.bots.dtos.VideoPost
 interface StatisticsService {
     fun getAllStatsInfoByVideoId(videoId: String): List<StatInfoGet>
 
-    fun isVideoExist(v: String): Boolean
+    fun isVideoExists(v: String): Boolean
 
     fun addVideo(v: VideoPost)
 

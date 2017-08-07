@@ -10,7 +10,7 @@ class Video {
     lateinit var id: String
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy="video")
-    lateinit var stats: List<Stat>
+    lateinit var reports: List<Report>
 }
 
 

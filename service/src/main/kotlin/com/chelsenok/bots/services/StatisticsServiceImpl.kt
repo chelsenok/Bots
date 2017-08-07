@@ -23,7 +23,7 @@ class StatisticsServiceImpl : StatisticsService {
         })
     }
 
-    override fun isVideoExist(v: String): Boolean =
+    override fun isVideoExists(v: String): Boolean =
             videoRepository.exists(v)
 
     override fun addVideo(v: VideoPost) {
