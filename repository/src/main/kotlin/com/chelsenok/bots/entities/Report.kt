@@ -25,6 +25,9 @@ class Report {
     @Column(name = "dislike_count")
     var dislikeCount: Long = 0
 
+    @Column(name = "comment_count")
+    var commentCount: Long = 0
+
     @Column(name = "video_id")
     lateinit var videoId: String
 

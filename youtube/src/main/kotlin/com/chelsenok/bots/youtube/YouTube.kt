@@ -34,7 +34,7 @@ class YouTube {
                 .build()
     }
 
-    fun getReport(id: String): Report? {
+    fun getReport(id: String): YouTubeReport? {
         val key = properties.getProperty(PROPERTY_API_KEY)
         val iterator = getVideosIterator(youtube, id, key)
         if (!iterator.hasNext()) {
@@ -45,7 +45,8 @@ class YouTube {
             channels.key = key
             channels.id = video.snippet.channelId
             val channel = channels.execute().items.iterator().next()
-            return Report(
+            return YouTubeReport(
+                    video.id,
                     channel.statistics.subscriberCount.toLong(),
                     video.statistics.viewCount.toLong(),
                     video.statistics.likeCount.toLong(),

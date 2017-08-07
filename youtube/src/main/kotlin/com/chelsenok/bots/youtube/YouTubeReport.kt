@@ -1,6 +1,7 @@
 package com.chelsenok.bots.youtube
 
-class Report(
+class YouTubeReport(
+        val videoId: String,
         val subscriberCount: Long,
         val viewCount: Long,
         val likeCount: Long,

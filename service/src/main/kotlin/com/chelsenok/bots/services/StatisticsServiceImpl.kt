@@ -6,6 +6,7 @@ import com.chelsenok.bots.dtos.VideoPost
 import com.chelsenok.bots.entities.Video
 import com.chelsenok.bots.repositories.StatRepository
 import com.chelsenok.bots.repositories.VideoRepository
+import com.chelsenok.bots.youtube.YouTube
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -25,7 +26,7 @@ class StatisticsServiceImpl : StatisticsService {
 
     override fun isVideoValid(v: String): Boolean =
             !videoRepository.exists(v)
-//                    && YouTube().isVideoExists(v)
+                    && YouTube().isVideoExists(v)
 
     override fun addVideo(v: VideoPost) {
         val video: Video? = ConverterFactory.get<VideoPost, Video>()?.convertDtoToEntity(v)
