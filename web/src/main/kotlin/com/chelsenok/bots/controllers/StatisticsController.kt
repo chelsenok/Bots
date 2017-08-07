@@ -1,20 +1,35 @@
 package com.chelsenok.bots.controllers
 
-import com.chelsenok.bots.dtos.StatInfo
+import com.chelsenok.bots.dtos.StatInfoGet
+import com.chelsenok.bots.dtos.VideoPost
 import com.chelsenok.bots.services.StatisticsService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class StatisticsController {
 
     @Autowired
-    lateinit var service: StatisticsService
+    lateinit var statisticsService: StatisticsService
 
-    @RequestMapping(value = "/", method = arrayOf(RequestMethod.GET))
-    @ResponseBody
-    fun hello(): List<StatInfo> = service.getAllStatsInfoByVideoId("la")
+    @PostMapping(value = "/stats")
+    fun postVideo(@RequestBody video: VideoPost): ResponseEntity<Unit> {
+        if (statisticsService.isVideoExist(video.v)) {
+            return ResponseEntity.badRequest().body(null)
+        } else {
+            statisticsService.addVideo(video)
+            return ResponseEntity.ok(null)
+        }
+    }
+
+    @GetMapping(value = "/stats")
+    fun getStats(@RequestParam v: String): ResponseEntity<List<StatInfoGet>> {
+        if (statisticsService.isVideoExist(v)) {
+            return ResponseEntity(statisticsService.getAllStatsInfoByVideoId(v), HttpStatus.OK)
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+        }
+    }
 }

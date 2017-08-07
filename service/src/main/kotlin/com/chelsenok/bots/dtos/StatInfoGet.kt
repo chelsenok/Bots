@@ -1,6 +1,6 @@
 package com.chelsenok.bots.dtos
 
-class StatInfo(
+class StatInfoGet(
         var id: Long,
         var time: Long
 )
