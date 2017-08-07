@@ -16,7 +16,7 @@ class StatisticsController {
 
     @PostMapping(value = "/stats")
     fun postVideo(@RequestBody video: VideoPost): ResponseEntity<Unit> {
-        if (statisticsService.isVideoExist(video.v)) {
+        if (statisticsService.isVideoExist(video.id)) {
             return ResponseEntity.badRequest().body(null)
         } else {
             statisticsService.addVideo(video)
@@ -25,9 +25,9 @@ class StatisticsController {
     }
 
     @GetMapping(value = "/stats")
-    fun getStats(@RequestParam v: String): ResponseEntity<List<StatInfoGet>> {
-        if (statisticsService.isVideoExist(v)) {
-            return ResponseEntity(statisticsService.getAllStatsInfoByVideoId(v), HttpStatus.OK)
+    fun getStats(@RequestParam id: String): ResponseEntity<List<StatInfoGet>> {
+        if (statisticsService.isVideoExist(id)) {
+            return ResponseEntity(statisticsService.getAllStatsInfoByVideoId(id), HttpStatus.OK)
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
         }
