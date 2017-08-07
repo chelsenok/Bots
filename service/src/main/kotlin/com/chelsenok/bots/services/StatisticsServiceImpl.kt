@@ -23,8 +23,9 @@ class StatisticsServiceImpl : StatisticsService {
         })
     }
 
-    override fun isVideoExists(v: String): Boolean =
-            videoRepository.exists(v)
+    override fun isVideoValid(v: String): Boolean =
+            !videoRepository.exists(v)
+//                    && YouTube().isVideoExists(v)
 
     override fun addVideo(v: VideoPost) {
         val video: Video? = ConverterFactory.get<VideoPost, Video>()?.convertDtoToEntity(v)
