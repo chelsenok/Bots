@@ -2,12 +2,15 @@ package com.chelsenok.bots.entities
 
 import javax.persistence.*
 
+
 @Entity
 @Table(name = "report", schema = "statistics")
 class Report {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_id_seq")
+    @SequenceGenerator(name = "report_id_seq", sequenceName = "report_id_seq", allocationSize = 1)
+    @Column(name = "id")
     var id: Long = 0
 
     @Column(name = "time")
@@ -32,10 +35,11 @@ class Report {
     lateinit var videoId: String
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "video_id", insertable = false, updatable = false)
+    @JoinColumn(name = "video_id", referencedColumnName = "id", insertable = false, updatable = false)
     lateinit var video: Video
 
 }
+
 
 
 
