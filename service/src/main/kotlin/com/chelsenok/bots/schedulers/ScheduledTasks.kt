@@ -33,7 +33,7 @@ open class ScheduledTasks {
     @Async
     private fun writeReport(video: Video, youtube: YouTube) {
         val report = ConverterFactory
-                .get<YouTubeReport, Report>()!!.convertDtoToEntity(youtube.getReport(video.id)!!)
+                .get<YouTubeReport, Report>()!!.convert(youtube.getReport(video.id)!!)
         reportRepository.saveAndFlush(report)
     }
 }
