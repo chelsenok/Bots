@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @SpringBootApplication
 @EnableScheduling
 @EnableAsync
-@Configuration
 open class Application
 
 fun main(args: Array<String>) {

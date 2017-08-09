@@ -25,13 +25,14 @@ class StatisticsServiceImpl : StatisticsService {
     override fun isVideoExists(id: String) = videoRepository.exists(id)
 
     override fun getAllStatsInfoByVideoId(videoId: String): List<StatInfoGet> {
-        LOGGER.error("stats is going for response")
-        LOGGER.warn("stats is going for response")
+        LOGGER.trace("stats is going for response")
         LOGGER.debug("stats is going for response")
         LOGGER.info("stats is going for response")
+        LOGGER.warn("stats is going for response")
+        LOGGER.error("stats is going for response")
         LOGGER.fatal("stats is going for response")
         return ArrayList<StatInfoGet>(reportRepository.findAllByVideoId(videoId).map { stat ->
-            ConverterFactory.get(Report::class.java, StatInfoGet::class.java)?.convert(stat)
+            ConverterFactory.get<Report, StatInfoGet>()?.convert(stat)
         })
     }
 
@@ -39,7 +40,7 @@ class StatisticsServiceImpl : StatisticsService {
 
     override fun addVideo(v: VideoPost) {
         val video: Video? = ConverterFactory
-                .get(VideoPost::class.java, Video::class.java)?.convert(v)
+                .get<VideoPost, Video>()?.convert(v)
         videoRepository.saveAndFlush(video)
     }
 

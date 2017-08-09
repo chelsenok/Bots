@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct
 
 
 @Component
-open class ReportScheduler: ReportWritable {
+open class ReportScheduler : ReportWritable {
 
     @Autowired
     private lateinit var reportRepository: ReportRepository
@@ -33,8 +33,7 @@ open class ReportScheduler: ReportWritable {
     @Async
     override fun writeReport(video: Video, youtube: YouTube) {
         val report = ConverterFactory
-                .get(YouTubeReport::class.java, Report::class.java)!!
-                .convert(youtube.getReport(video.id)!!)
+                .get<YouTubeReport, Report>()?.convert(youtube.getReport(video.id))
         reportRepository.saveAndFlush(report)
     }
 }

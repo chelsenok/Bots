@@ -12,22 +12,22 @@ import org.springframework.core.convert.converter.Converter
 abstract class ConverterFactory {
 
     companion object {
-        fun <T, K> get(obj1: Class<T>, obj2: Class<K>): Converter<T, K>? {
-            when (obj1) {
-                VideoPost::class.java ->
-                    when (obj2) {
-                        Video::class.java ->
-                            return object : VideoPostToVideoConverter {} as Converter<T, K>
+        inline fun <reified From, reified To> get(): Converter<From, To>? {
+            when (From::class) {
+                VideoPost::class ->
+                    when (To::class) {
+                        Video::class ->
+                            return object : VideoPostToVideoConverter {} as Converter<From, To>
                     }
-                Report::class.java ->
-                    when (obj2) {
-                        StatInfoGet::class.java ->
-                            return object : ReportToStatInfoGetConverter {} as Converter<T, K>
+                Report::class ->
+                    when (To::class) {
+                        StatInfoGet::class ->
+                            return object : ReportToStatInfoGetConverter {} as Converter<From, To>
                     }
-                YouTubeReport::class.java ->
-                    when (obj2) {
-                        Report::class.java ->
-                            return object : YouTubeReportToReportConverter {} as Converter<T, K>
+                YouTubeReport::class ->
+                    when (To::class) {
+                        Report::class ->
+                            return object : YouTubeReportToReportConverter {} as Converter<From, To>
                     }
             }
             return null
