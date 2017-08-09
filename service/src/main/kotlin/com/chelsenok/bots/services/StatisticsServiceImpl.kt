@@ -8,20 +8,28 @@ import com.chelsenok.bots.entities.Report
 import com.chelsenok.bots.entities.Video
 import com.chelsenok.bots.repositories.ReportRepository
 import com.chelsenok.bots.repositories.VideoRepository
+import org.apache.logging.log4j.LogManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class StatisticsServiceImpl : StatisticsService {
     @Autowired
-    lateinit var reportRepository: ReportRepository
+    private lateinit var reportRepository: ReportRepository
 
     @Autowired
-    lateinit var videoRepository: VideoRepository
+    private lateinit var videoRepository: VideoRepository
+
+    private val LOGGER = LogManager.getLogger(this::class.java)
 
     override fun isVideoExists(id: String) = videoRepository.exists(id)
 
     override fun getAllStatsInfoByVideoId(videoId: String): List<StatInfoGet> {
+        LOGGER.error("stats is going for response")
+        LOGGER.warn("stats is going for response")
+        LOGGER.debug("stats is going for response")
+        LOGGER.info("stats is going for response")
+        LOGGER.fatal("stats is going for response")
         return ArrayList<StatInfoGet>(reportRepository.findAllByVideoId(videoId).map { stat ->
             ConverterFactory.get(Report::class.java, StatInfoGet::class.java)?.convert(stat)
         })

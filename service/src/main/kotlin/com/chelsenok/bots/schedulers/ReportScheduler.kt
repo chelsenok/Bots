@@ -18,10 +18,10 @@ import javax.annotation.PostConstruct
 open class ReportScheduler: ReportWritable {
 
     @Autowired
-    lateinit var reportRepository: ReportRepository
+    private lateinit var reportRepository: ReportRepository
 
     @Autowired
-    lateinit var videoRepository: VideoRepository
+    private lateinit var videoRepository: VideoRepository
 
     @Scheduled(fixedRate = 60000)
     @PostConstruct

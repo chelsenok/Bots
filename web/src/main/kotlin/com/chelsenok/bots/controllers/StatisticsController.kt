@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 class StatisticsController {
 
     @Autowired
-    lateinit var statisticsService: StatisticsService
+    private lateinit var statisticsService: StatisticsService
 
     @PostMapping(value = "/reports")
     fun postVideo(@RequestBody video: VideoPost): ResponseEntity<Unit> {
