@@ -9,6 +9,7 @@ mvnw.cmd
 # Log file
 *.log
 .mvn
+*.yaml
 
 # BlueJ files
 *.ctxt
