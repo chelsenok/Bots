@@ -8,8 +8,7 @@ import javax.persistence.*
 class Report {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_id_seq")
-    @SequenceGenerator(name = "report_id_seq", sequenceName = "report_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     var id: Long = 0
 

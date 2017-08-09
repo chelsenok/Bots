@@ -6,7 +6,9 @@ target
 # Log file
 *.log
 .mvn
-
+mvnw
+mvnw.cmd
+*.properties
 # BlueJ files
 *.ctxt
 

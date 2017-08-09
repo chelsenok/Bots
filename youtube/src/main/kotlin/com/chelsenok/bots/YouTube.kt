@@ -1,4 +1,4 @@
-package com.chelsenok.bots.youtube
+package com.chelsenok.bots
 
 import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.http.javanet.NetHttpTransport

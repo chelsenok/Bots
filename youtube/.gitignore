@@ -7,6 +7,10 @@
 # Log file
 *.log
 
+mvnw
+mvnw.cmd
+*.properties
+*.iml
 # BlueJ files
 *.ctxt
 

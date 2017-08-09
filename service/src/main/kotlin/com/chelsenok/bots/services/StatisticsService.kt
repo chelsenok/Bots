@@ -10,4 +10,6 @@ interface StatisticsService {
 
     fun addVideo(v: VideoPost)
 
+    fun isVideoExists(id: String): Boolean
+
 }

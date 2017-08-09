@@ -26,7 +26,7 @@ class StatisticsController {
 
     @GetMapping(value = "/reports")
     fun getStats(@RequestParam id: String): ResponseEntity<List<StatInfoGet>> {
-        if (statisticsService.isVideoValid(id)) {
+        if (statisticsService.isVideoExists(id)) {
             return ResponseEntity(statisticsService.getAllStatsInfoByVideoId(id), HttpStatus.OK)
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)

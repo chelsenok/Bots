@@ -3,6 +3,9 @@
 .idea
 target
 *.iml
+mvnw
+mvnw.cmd
+*.properties
 # Log file
 *.log
 .mvn

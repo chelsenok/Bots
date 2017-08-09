@@ -1,4 +1,4 @@
-package com.chelsenok.bots.youtube
+package com.chelsenok.bots
 
 class YouTubeReport(
         val videoId: String,

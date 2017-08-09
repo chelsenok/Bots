@@ -1,12 +1,12 @@
 package com.chelsenok.bots.schedulers
 
+import com.chelsenok.bots.YouTube
+import com.chelsenok.bots.YouTubeReport
 import com.chelsenok.bots.converters.ConverterFactory
 import com.chelsenok.bots.entities.Report
 import com.chelsenok.bots.entities.Video
 import com.chelsenok.bots.repositories.ReportRepository
 import com.chelsenok.bots.repositories.VideoRepository
-import com.chelsenok.bots.youtube.YouTube
-import com.chelsenok.bots.youtube.YouTubeReport
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Async
 import org.springframework.scheduling.annotation.Scheduled
@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct
 
 
 @Component
-open class ScheduledTasks {
+open class ReportScheduler: ReportWritable {
 
     @Autowired
     lateinit var reportRepository: ReportRepository
@@ -25,15 +25,16 @@ open class ScheduledTasks {
 
     @Scheduled(fixedRate = 60000)
     @PostConstruct
-    open fun doReports() {
+    override fun doReports() {
         val youtube = YouTube()
         videoRepository.findAll().forEach { it: Video -> writeReport(it, youtube) }
     }
 
     @Async
-    private fun writeReport(video: Video, youtube: YouTube) {
+    override fun writeReport(video: Video, youtube: YouTube) {
         val report = ConverterFactory
-                .get<YouTubeReport, Report>()!!.convert(youtube.getReport(video.id)!!)
+                .get(YouTubeReport::class.java, Report::class.java)!!
+                .convert(youtube.getReport(video.id)!!)
         reportRepository.saveAndFlush(report)
     }
 }
