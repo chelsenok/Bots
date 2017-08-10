@@ -12,6 +12,9 @@ class Report {
     @Column(name = "id")
     var id: Long = 0
 
+    @Column(name = "video_id")
+    lateinit var videoId: String
+
     @Column(name = "time")
     var time: Long = 0
 
@@ -29,9 +32,6 @@ class Report {
 
     @Column(name = "comment_count")
     var commentCount: Long = 0
-
-    @Column(name = "video_id")
-    lateinit var videoId: String
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "video_id", referencedColumnName = "id", insertable = false, updatable = false)

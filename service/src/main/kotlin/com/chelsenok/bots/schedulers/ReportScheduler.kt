@@ -25,7 +25,7 @@ open class ReportScheduler : ReportWritable {
     @Autowired
     private lateinit var modelMapper: ModelMapper
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 60000, initialDelay = 60000)
     @PostConstruct
     override fun doReports() {
         val youtube = YouTube()
