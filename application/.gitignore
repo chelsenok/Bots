@@ -8,7 +8,6 @@ target
 .mvn
 mvnw
 mvnw.cmd
-*.properties
 # BlueJ files
 *.ctxt
 
