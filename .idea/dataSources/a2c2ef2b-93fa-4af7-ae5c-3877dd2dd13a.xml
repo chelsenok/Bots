@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="bots@localhost">
+  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.4">
+    <root id="1"/>
+    <database id="2" parent="1" name="bots">
+      <ObjectId>16386</ObjectId>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </database>
+    <database id="3" parent="1" name="alexey">
+      <ObjectId>16385</ObjectId>
+    </database>
+    <schema id="4" parent="2" name="pg_catalog">
+      <ObjectId>11</ObjectId>
+      <Current>1</Current>
+    </schema>
+    <schema id="5" parent="2" name="pg_toast">
+      <ObjectId>99</ObjectId>
+    </schema>
+    <schema id="6" parent="2" name="pg_temp_1">
+      <ObjectId>11215</ObjectId>
+    </schema>
+    <schema id="7" parent="2" name="pg_toast_temp_1">
+      <ObjectId>11216</ObjectId>
+    </schema>
+    <schema id="8" parent="2" name="information_schema">
+      <ObjectId>11526</ObjectId>
+    </schema>
+    <schema id="9" parent="2" name="statistics">
+      <ObjectId>16387</ObjectId>
+      <IntrospectionTimestamp>2017-08-09.10:07:03.704</IntrospectionTimestamp>
+      <IntrospectionStateNumber>805</IntrospectionStateNumber>
+      <Visible>1</Visible>
+    </schema>
+    <sequence id="10" parent="9" name="report_id_seq">
+      <ObjectId>16470</ObjectId>
+      <StateNumber>804</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+    </sequence>
+    <table id="11" parent="9" name="report">
+      <ObjectId>16442</ObjectId>
+      <StateNumber>797</StateNumber>
+    </table>
+    <table id="12" parent="9" name="video">
+      <ObjectId>16409</ObjectId>
+      <StateNumber>746</StateNumber>
+    </table>
+    <column id="13" parent="11" name="id">
+      <Position>1</Position>
+      <DataType>bigint|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>805</StateNumber>
+      <SequenceName>statistics.report_id_seq</SequenceName>
+      <DefaultExpression>nextval(&apos;statistics.report_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="14" parent="11" name="video_id">
+      <Position>2</Position>
+      <DataType>varchar(15)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>771</StateNumber>
+    </column>
+    <column id="15" parent="11" name="time">
+      <Position>3</Position>
+      <DataType>bigint|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>774</StateNumber>
+      <DefaultExpression>0</DefaultExpression>
+    </column>
+    <column id="16" parent="11" name="subscriber_count">
+      <Position>4</Position>
+      <DataType>bigint|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>791</StateNumber>
+      <DefaultExpression>0</DefaultExpression>
+    </column>
+    <column id="17" parent="11" name="view_count">
+      <Position>5</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>792</StateNumber>
+      <DefaultExpression>0</DefaultExpression>
+    </column>
+    <column id="18" parent="11" name="like_count">
+      <Position>6</Position>
+      <DataType>bigint|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>795</StateNumber>
+      <DefaultExpression>0</DefaultExpression>
+    </column>
+    <column id="19" parent="11" name="dislike_count">
+      <Position>7</Position>
+      <DataType>bigint|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>793</StateNumber>
+      <DefaultExpression>0</DefaultExpression>
+    </column>
+    <column id="20" parent="11" name="comment_count">
+      <Position>8</Position>
+      <DataType>bigint|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>794</StateNumber>
+      <DefaultExpression>0</DefaultExpression>
+    </column>
+    <index id="21" parent="11" name="stat_id_pk">
+      <ObjectId>16461</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="22" parent="11" name="stat_id_uindex">
+      <ObjectId>16463</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="23" parent="11" name="stat_id_pk">
+      <ObjectId>16462</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>stat_id_pk</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="24" parent="12" name="id">
+      <Position>1</Position>
+      <DataType>varchar(15)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>768</StateNumber>
+    </column>
+    <index id="25" parent="12" name="video_pkey">
+      <ObjectId>16412</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="26" parent="12" name="video_v_uindex">
+      <ObjectId>16414</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="27" parent="12" name="video_pkey">
+      <ObjectId>16413</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>video_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

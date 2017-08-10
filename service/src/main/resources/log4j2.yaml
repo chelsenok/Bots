@@ -1,0 +1,42 @@
+Configuration:
+
+  Appenders:
+    Console:
+      name: Console_Appender
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: "%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n"
+    File:
+      name: File_Appender
+      fileName: logfile.log
+      PatternLayout:
+        pattern: "%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n"
+    Smtp:
+      name: Smtp_Appender
+      type: smtp
+      from: logger.alex.khanko@gmail.com
+      to: logger.alex.khanko@gmail.com
+      smtpUsername: logger.alex.khanko@gmail.com
+      smtpPassword: khanko.alex.logger
+      subject: Test YAML Log4j
+      bufferSize: 512
+      smtpProtocol: smtps
+      smtpHost: smtp.gmail.com
+      smtpPort: 465
+
+  Loggers:
+    Root:
+      level: all
+      AppenderRef:
+        ref: Console_Appender
+    Logger:
+      - name: com.chelsenok.bots
+        additivity: false
+        level: all
+        AppenderRef:
+          - ref: Console_Appender
+            level: trace
+          - ref: File_Appender
+            level: info
+            ref: Smtp_Appender
+            level: error

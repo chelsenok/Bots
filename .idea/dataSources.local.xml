@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="bots@localhost" uuid="a2c2ef2b-93fa-4af7-ae5c-3877dd2dd13a">
+      <database-info product="PostgreSQL" version="9.3.17" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.1.1">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>alexey</user-name>
+      <introspection-schemas>bots:statistics</introspection-schemas>
+    </data-source>
+  </component>
+</project>
