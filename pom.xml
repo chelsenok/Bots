@@ -14,5 +14,6 @@
         <module>repository</module>
         <module>service</module>
         <module>web</module>
+        <module>youtube</module>
     </modules>
 </project>
