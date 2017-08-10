@@ -25,18 +25,18 @@ open class ReportScheduler : ReportWritable {
     @Autowired
     private lateinit var modelMapper: ModelMapper
 
-    @Scheduled(fixedRate = 60000, initialDelay = 60000)
+    @Autowired
+    private lateinit var youtube: YouTube
+
+    @Scheduled(fixedRate = 60000)
     @PostConstruct
     override fun doReports() {
-        val youtube = YouTube()
         videoRepository.findAll().forEach { it: Video -> writeReport(it, youtube) }
     }
 
     @Async
     override fun writeReport(video: Video, youtube: YouTube) {
         val report = modelMapper.map(youtube.getReport(video.id), Report::class.java)
-//                ConverterFactory
-//                .get<YouTubeReport, Report>()?.convert(youtube.getReport(video.id))
         report.time = Calendar.getInstance(TimeZone.getTimeZone("GMT")).timeInMillis
         reportRepository.saveAndFlush(report)
     }

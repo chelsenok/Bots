@@ -25,7 +25,6 @@ class StatisticsServiceImpl : StatisticsService {
 
     override fun getAllStatsInfoByVideoId(videoId: String): List<StatInfoGet> {
         return ArrayList<StatInfoGet>(reportRepository.findAllByVideoId(videoId).map { stat ->
-            //            ConverterFactory.get<Report, StatInfoGet>()?.convert(stat)
             modelMapper.map(stat, StatInfoGet::class.java)
         })
     }
@@ -34,8 +33,6 @@ class StatisticsServiceImpl : StatisticsService {
 
     override fun addVideo(v: VideoPost) {
         val video: Video? = modelMapper.map(v, Video::class.java)
-//                ConverterFactory
-//                .get<VideoPost, Video>()?.convert(v)
         videoRepository.saveAndFlush(video)
     }
 

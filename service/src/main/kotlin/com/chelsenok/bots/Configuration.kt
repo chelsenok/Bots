@@ -17,4 +17,7 @@ open class Configuration {
         modelMapper.configuration.matchingStrategy = MatchingStrategies.STRICT
         return modelMapper
     }
+
+    @Bean
+    open fun youtube() = YouTube()
 }
