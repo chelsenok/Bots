@@ -12,7 +12,6 @@
     <modules>
         <module>repository</module>
         <module>service/youtube</module>
-        <module>service/asynclogger</module>
         <module>service</module>
         <module>web</module>
         <module>application</module>
