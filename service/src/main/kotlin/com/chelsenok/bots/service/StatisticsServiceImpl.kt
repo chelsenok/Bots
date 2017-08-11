@@ -29,15 +29,11 @@ class StatisticsServiceImpl : StatisticsService {
     private lateinit var youtube: YouTube
 
     @Autowired
-    private lateinit var logger: Logger
-
-    @Autowired
     private lateinit var em: EntityManager
 
     override fun isVideoExists(id: String) = videoRepository.exists(id)
 
     override fun getAllStatsInfoByVideoId(videoId: String): List<StatInfoGet> {
-        logger.fatal("STATS IS GOING TO RESPONSE !!!")
         return ArrayList<StatInfoGet>(reportRepository.findAllByVideoId(videoId).map { stat ->
             modelMapper.map(stat, StatInfoGet::class.java)
         })
