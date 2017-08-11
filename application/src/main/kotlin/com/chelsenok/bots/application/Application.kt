@@ -33,7 +33,6 @@ open class Application {
 
     @Bean
     open fun youtube() = YouTube()
-
 }
 
 fun main(args: Array<String>) {
