@@ -1,6 +1,8 @@
 package com.chelsenok.bots.application
 
 import com.chelsenok.youtube.YouTube
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 import org.modelmapper.ModelMapper
 import org.modelmapper.convention.MatchingStrategies
 import org.springframework.boot.SpringApplication
@@ -33,6 +35,9 @@ open class Application {
 
     @Bean
     open fun youtube() = YouTube()
+
+    @Bean
+    open fun logger(): Logger = LogManager.getLogger()
 }
 
 fun main(args: Array<String>) {

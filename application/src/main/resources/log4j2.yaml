@@ -23,13 +23,19 @@ Configuration:
       smtpProtocol: smtps
       smtpHost: smtp.gmail.com
       smtpPort: 465
+    Async:
+      - name: com.chelsenok.bots
+        AppenderRef:
+          - ref: Console_Appender
+          - ref: File_Appender
+          - ref: Smtp_Appender
 
   Loggers:
     Root:
       level: all
       AppenderRef:
         ref: Console_Appender
-    Logger:
+    AsyncLogger:
       - name: com.chelsenok.bots
         additivity: false
         level: all

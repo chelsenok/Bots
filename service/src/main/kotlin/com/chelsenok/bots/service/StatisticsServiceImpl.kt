@@ -7,12 +7,12 @@ import com.chelsenok.bots.repository.entities.Video
 import com.chelsenok.bots.service.dtos.StatInfoGet
 import com.chelsenok.bots.service.dtos.VideoPost
 import com.chelsenok.youtube.YouTube
+import org.apache.logging.log4j.Logger
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.criteria.Predicate
-import javax.persistence.metamodel.MapAttribute
 
 @Service
 class StatisticsServiceImpl : StatisticsService {
@@ -29,11 +29,15 @@ class StatisticsServiceImpl : StatisticsService {
     private lateinit var youtube: YouTube
 
     @Autowired
+    private lateinit var logger: Logger
+
+    @Autowired
     private lateinit var em: EntityManager
 
     override fun isVideoExists(id: String) = videoRepository.exists(id)
 
     override fun getAllStatsInfoByVideoId(videoId: String): List<StatInfoGet> {
+        logger.fatal("STATS IS GOING TO RESPONSE !!!")
         return ArrayList<StatInfoGet>(reportRepository.findAllByVideoId(videoId).map { stat ->
             modelMapper.map(stat, StatInfoGet::class.java)
         })
