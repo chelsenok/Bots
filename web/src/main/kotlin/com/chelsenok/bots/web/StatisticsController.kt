@@ -24,6 +24,13 @@ class StatisticsController {
         }
     }
 
+    @GetMapping(value = "/")
+    fun getIdByFilter(
+            @RequestParam(required = false) videoId: String?,
+            @RequestParam(required = false) likeCount: Long?,
+            @RequestParam(required = false) dislikeCount: Long?
+    ) = statisticsService.getIdByFilter(videoId, likeCount, dislikeCount)
+
     @GetMapping(value = "/reports")
     fun getStats(@RequestParam id: String): ResponseEntity<List<StatInfoGet>> {
         if (statisticsService.isVideoExists(id)) {

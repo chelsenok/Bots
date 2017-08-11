@@ -1,18 +1,21 @@
 package com.chelsenok.bots.service
 
-import com.chelsenok.bots.repository.entities.Video
 import com.chelsenok.bots.repository.ReportRepository
 import com.chelsenok.bots.repository.VideoRepository
+import com.chelsenok.bots.repository.entities.Report
+import com.chelsenok.bots.repository.entities.Video
 import com.chelsenok.bots.service.dtos.StatInfoGet
 import com.chelsenok.bots.service.dtos.VideoPost
 import com.chelsenok.youtube.YouTube
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import javax.persistence.EntityManager
+import javax.persistence.criteria.Predicate
+import javax.persistence.metamodel.MapAttribute
 
 @Service
 class StatisticsServiceImpl : StatisticsService {
-
     @Autowired
     private lateinit var reportRepository: ReportRepository
 
@@ -24,6 +27,9 @@ class StatisticsServiceImpl : StatisticsService {
 
     @Autowired
     private lateinit var youtube: YouTube
+
+    @Autowired
+    private lateinit var em: EntityManager
 
     override fun isVideoExists(id: String) = videoRepository.exists(id)
 
@@ -38,6 +44,21 @@ class StatisticsServiceImpl : StatisticsService {
     override fun addVideo(v: VideoPost) {
         val video: Video? = modelMapper.map(v, Video::class.java)
         videoRepository.saveAndFlush(video)
+    }
+
+    override fun getIdByFilter(videoId: String?, likeCount: Long?, dislikeCount: Long?): List<Long> {
+        val builder = em.criteriaBuilder
+        val query = builder.createQuery(Report::class.java)
+        val root = query.from(Report::class.java)
+
+        val array = arrayListOf<Predicate>()
+
+        if (videoId != null) array.add(builder.equal(root.get<String>("videoId"), videoId))
+        if (likeCount != null) array.add(builder.equal(root.get<Long>("likeCount"), likeCount))
+        if (dislikeCount != null) array.add(builder.equal(root.get<Long>("dislikeCount"), dislikeCount))
+
+        query.where(builder.and(*array.toTypedArray()))
+        return em.createQuery(query.select(root)).resultList.map { it -> it.id }
     }
 
 }
