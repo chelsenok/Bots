@@ -3,7 +3,7 @@ package com.chelsenok.bots.repository.entities
 import javax.persistence.*
 
 @Entity
-@Table(name = "report", schema = "statistics")
+@Table(name = "report")
 class Report {
 
     @Id
