@@ -32,6 +32,7 @@
             <groupId>com.chelsenok.bots</groupId>
             <artifactId>repository</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <type>war</type>
         </dependency>
         <dependency>
             <groupId>com.chelsenok</groupId>
