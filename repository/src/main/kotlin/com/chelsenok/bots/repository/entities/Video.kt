@@ -11,7 +11,7 @@ class Video {
     lateinit var id: String
 
     @OneToMany(mappedBy = "video", cascade = arrayOf(CascadeType.MERGE, CascadeType.REMOVE), fetch = FetchType.EAGER)
-    lateinit var reports: List<Report>
+    lateinit var reports: Set<Report>
 }
 
 

@@ -7,11 +7,11 @@ import com.chelsenok.bots.repository.entities.Video
 import com.chelsenok.bots.service.dtos.StatInfoGet
 import com.chelsenok.bots.service.dtos.VideoPost
 import com.chelsenok.youtube.YouTube
-import org.apache.logging.log4j.Logger
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
+import javax.persistence.criteria.JoinType
 import javax.persistence.criteria.Predicate
 
 @Service
@@ -59,6 +59,24 @@ class StatisticsServiceImpl : StatisticsService {
 
         query.where(builder.and(*array.toTypedArray()))
         return em.createQuery(query.select(root)).resultList.map { it -> it.id }
+    }
+
+    override fun getStatusByFilter(videoId: String?, likeCount: Long?): Boolean {
+        val builder = em.criteriaBuilder
+        val query = builder.createQuery(Video::class.java)
+        val root = query.from(Video::class.java)
+
+        val array = arrayListOf<Predicate>()
+        val video = videoRepository.findOne(videoId)
+
+        if (video != null) {
+            array.add(builder.equal(
+                    root.joinSet<Video, Report>("reports", JoinType.INNER).get<Long>("likeCount"), likeCount
+            ))
+        }
+
+        query.where(builder.and(*array.toTypedArray()))
+        return !em.createQuery(query.select(root)).resultList.isEmpty()
     }
 
 }

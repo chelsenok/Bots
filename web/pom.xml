@@ -78,6 +78,18 @@
 			<version>5.0.1.Final</version>
 		</dependency>
 		<!--VALIDATION-->
+
+		<dependency>
+			<groupId>com.graphql-java</groupId>
+			<artifactId>graphql-java</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>net.minidev</groupId>
+			<artifactId>json-smart</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

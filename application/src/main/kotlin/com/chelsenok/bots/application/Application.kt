@@ -38,6 +38,7 @@ open class Application {
 
     @Bean
     open fun logger(): Logger = LogManager.getLogger()
+
 }
 
 fun main(args: Array<String>) {

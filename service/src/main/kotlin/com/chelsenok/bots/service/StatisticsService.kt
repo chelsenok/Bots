@@ -15,4 +15,5 @@ interface StatisticsService {
 
     fun getIdByFilter(videoId: String?, likeCount: Long?, dislikeCount: Long?): List<Long>
 
+    fun getStatusByFilter(videoId: String?, likeCount: Long?): Boolean
 }
