@@ -34,7 +34,7 @@ class StatisticsServiceImpl : StatisticsService {
     override fun isVideoExists(id: String) = videoRepository.exists(id)
 
     override fun getAllStatsInfoByVideoId(videoId: String): List<StatInfoGet> {
-        return ArrayList<StatInfoGet>(reportRepository.findAllByVideoId(videoId).map { stat ->
+        return ArrayList<StatInfoGet>(videoRepository.findOne(videoId).reports.map { stat ->
             modelMapper.map(stat, StatInfoGet::class.java)
         })
     }

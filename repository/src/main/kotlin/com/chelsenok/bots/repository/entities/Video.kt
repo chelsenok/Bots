@@ -7,10 +7,10 @@ import javax.persistence.*
 class Video {
 
     @Id
-    @Column(name = "id", length = 15)
+    @Column(name = "id", length = 15, nullable = false, unique = true)
     lateinit var id: String
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "video")
+    @OneToMany(mappedBy = "video", cascade = arrayOf(CascadeType.MERGE, CascadeType.REMOVE), fetch = FetchType.EAGER)
     lateinit var reports: List<Report>
 }
 

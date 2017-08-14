@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository
 interface ReportRepository : JpaRepository<Report, Long>, StatCustom
 
 interface StatCustom {
-    fun findAllByVideoId(videoId: String): List<Report>
-
 }
