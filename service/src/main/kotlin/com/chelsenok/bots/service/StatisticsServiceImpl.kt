@@ -17,6 +17,7 @@ import javax.persistence.criteria.Predicate
 
 @Service
 class StatisticsServiceImpl : StatisticsService {
+
     @Autowired
     private lateinit var reportRepository: ReportRepository
 
@@ -81,10 +82,6 @@ class StatisticsServiceImpl : StatisticsService {
             array.add(builder.equal(
                     join.get<Long>("commentCount"), commentCount
             ))
-
-//            array.add(builder.equal(
-//                    root.joinList<Video, Report>("reports", JoinType.INNER).get<Long>("likeCount"), likeCount
-//            ))
         }
 
         query.where(builder.and(*array.toTypedArray()))
