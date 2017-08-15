@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
+import javax.persistence.criteria.Join
 import javax.persistence.criteria.JoinType
 import javax.persistence.criteria.Predicate
 
@@ -46,6 +47,8 @@ class StatisticsServiceImpl : StatisticsService {
         videoRepository.saveAndFlush(video)
     }
 
+//    TEST
+
     override fun getIdByFilter(videoId: String?, likeCount: Long?, dislikeCount: Long?): List<Long> {
         val builder = em.criteriaBuilder
         val query = builder.createQuery(Report::class.java)
@@ -61,7 +64,7 @@ class StatisticsServiceImpl : StatisticsService {
         return em.createQuery(query.select(root)).resultList.map { it -> it.id }
     }
 
-    override fun getStatusByFilter(videoId: String?, likeCount: Long?): Boolean {
+    override fun getStatusByFilter(videoId: String?, likeCount: Long?, commentCount: Long?): Boolean {
         val builder = em.criteriaBuilder
         val query = builder.createQuery(Video::class.java)
         val root = query.from(Video::class.java)
@@ -70,13 +73,24 @@ class StatisticsServiceImpl : StatisticsService {
         val video = videoRepository.findOne(videoId)
 
         if (video != null) {
+            val join = root.join<Video, Report>("reports")
+
             array.add(builder.equal(
-                    root.joinSet<Video, Report>("reports", JoinType.INNER).get<Long>("likeCount"), likeCount
+                    join.get<Long>("likeCount"), likeCount
             ))
+            array.add(builder.equal(
+                    join.get<Long>("commentCount"), commentCount
+            ))
+
+//            array.add(builder.equal(
+//                    root.joinList<Video, Report>("reports", JoinType.INNER).get<Long>("likeCount"), likeCount
+//            ))
         }
 
         query.where(builder.and(*array.toTypedArray()))
         return !em.createQuery(query.select(root)).resultList.isEmpty()
     }
+
+//    TEST
 
 }
