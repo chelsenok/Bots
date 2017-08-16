@@ -113,6 +113,14 @@
         </dependency>
         <!--VALIDATION-->
 
+        <!--GRAPHQL-->
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!--GRAPHQL-->
+
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>

@@ -3,15 +3,11 @@ package com.chelsenok.bots.web
 import com.chelsenok.bots.service.StatisticsService
 import com.chelsenok.bots.service.dtos.StatInfoGet
 import com.chelsenok.bots.service.dtos.VideoPost
+import graphql.ExecutionResult
 import graphql.GraphQL
-import graphql.Scalars.GraphQLInt
-import graphql.Scalars.GraphQLString
-import graphql.schema.DataFetcher
-import graphql.schema.DataFetchingEnvironment
-import graphql.schema.GraphQLArgument
-import graphql.schema.GraphQLFieldDefinition.newFieldDefinition
-import graphql.schema.GraphQLObjectType.newObject
-import graphql.schema.GraphQLSchema
+import graphql.GraphQLError
+import graphql.language.OperationDefinition
+import graphql.parser.Parser
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -27,6 +23,9 @@ class StatisticsController {
     @Autowired
     private lateinit var statisticsService: StatisticsService
 
+    @Autowired
+    private lateinit var graphQL: GraphQL
+
     @PostMapping(value = "/reports")
     fun postVideo(
             @Valid
@@ -35,70 +34,80 @@ class StatisticsController {
 
             result: BindingResult
     ): ResponseEntity<Unit> {
-        if (!result.hasErrors() && statisticsService.isVideoValid(video.id)) {
+        return if (!result.hasErrors() && statisticsService.isVideoValid(video.id)) {
             statisticsService.addVideo(video)
-            return ResponseEntity.ok(null)
+            ResponseEntity.ok(null)
         } else {
-            return ResponseEntity.badRequest().body(null)
+            ResponseEntity.badRequest().body(null)
         }
     }
 
     @GetMapping(value = "/reports")
     fun getStats(@RequestParam id: String): ResponseEntity<List<StatInfoGet>> {
-        if (statisticsService.isVideoExists(id)) {
-            return ResponseEntity(statisticsService.getAllStatsInfoByVideoId(id), HttpStatus.OK)
+        return if (statisticsService.isVideoExists(id)) {
+            ResponseEntity(statisticsService.getAllStatsInfoByVideoId(id), HttpStatus.OK)
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
         }
     }
+
+//    TEST
 
     @GetMapping(value = "/")
-    fun getStatus(@RequestParam videoId: String, @RequestParam likeCount: Long, @RequestParam commentCount: Long) = statisticsService.getStatusByFilter(videoId, likeCount, commentCount)
+    fun getStatus(
+            @RequestParam videoId: String,
+            @RequestParam likeCount: Long,
+            @RequestParam commentCount: Long
+    ) = statisticsService.getStatusByFilter(videoId, likeCount, commentCount)
 
-//    GRAPHQL
+//    TEST
+
+//    GRAPHQL=
+
 
     @RequestMapping(value = "/graphql")
-    fun testGql(@RequestBody body: Map<*, *>): Map<*, *> {
-        val query = newObject()
-                .name("Query")
-                .field(newFieldDefinition()
-                        .name("sum")
-                        .type(GraphQLInt)
-                        .argument(GraphQLArgument.newArgument()
-                                .name("arg1")
-                                .type(GraphQLInt)
-                        )
-                        .argument(GraphQLArgument.newArgument()
-                                .name("arg2")
-                                .type(GraphQLInt)
-                        )
-                        .dataFetcher(D())
-                )
-                .field(newFieldDefinition()
-                        .type(GraphQLString)
-                        .name("hello")
-                        .staticValue("world")
-                )
-                .build()
+    fun graphql(@RequestBody body: Map<*, *>): Map<*, *> {
+        val operations = Parser().parseDocument(body["query"] as String).definitions
+                .filterIsInstance<OperationDefinition>()
+                .filter { it.name != null }
+                .map { it.name }
 
-        val schema = GraphQLSchema.newSchema()
-                .query(query)
-                .build()
-
-        val graphQL = GraphQL.newGraphQL(schema).build()
-
-        val result = graphQL
-                .execute(body["query"] as String, null as Any?, body["variables"] as Map<String, Any>)
-                .getData<Map<*, *>>()
-        return hashMapOf("data" to result)
-    }
-
-    class D : DataFetcher<Int> {
-        override fun get(p0: DataFetchingEnvironment?): Int {
-            val arg1 = p0?.getArgument<Int>("arg1")
-            val arg2 = p0?.getArgument<Int>("arg2")
-            return if (arg1 != null && arg2 != null) arg1 + arg2 else 0
+        var result: ExecutionResult
+        val variables = body["variables"] as Map<String, Any>?
+        val query = body["query"] as String?
+        if (operations.isEmpty()) {
+            result = if (variables == null) {
+                graphQL.execute(query)
+            } else {
+                graphQL.execute(query, null as Any?, variables)
+            }
+            return hashMapOf(
+                    "data" to result.getData(),
+                    "errors" to result.errors
+            )
+        } else {
+            val data = HashMap<String, Map<*, *>>()
+            val errors = HashMap<String, List<GraphQLError>>()
+            if (variables == null) {
+                operations.forEach { operation: String ->
+                    result = graphQL.execute(query, operation, null as Any?)
+                    data.put(operation, result.getData<Map<*, *>>())
+                    errors.put(operation, result.errors)
+                }
+            } else {
+                operations.forEach { operation: String ->
+                    result = graphQL.execute(query, operation, null as Any?, variables)
+                    data.put(operation, result.getData<Map<*, *>>())
+                    errors.put(operation, result.errors)
+                }
+            }
+            return hashMapOf(
+                    "data" to data,
+                    "errors" to errors
+            )
         }
     }
+
+//    GRAPHQL
 
 }

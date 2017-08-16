@@ -1,6 +1,8 @@
 package com.chelsenok.bots.application
 
+import com.chelsenok.bots.web.AppSchema
 import com.chelsenok.youtube.YouTube
+import graphql.GraphQL
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.modelmapper.ModelMapper
@@ -39,6 +41,10 @@ open class Application {
     @Bean
     open fun logger(): Logger = LogManager.getLogger()
 
+    @Bean
+    open fun graphQL(): GraphQL = GraphQL.newGraphQL(
+            AppSchema().build()
+    ).build()
 }
 
 fun main(args: Array<String>) {
