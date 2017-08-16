@@ -13,7 +13,7 @@ interface StatisticsService {
 
     fun isVideoExists(id: String): Boolean
 
-    fun getIdByFilter(videoId: String?, likeCount: Long?, dislikeCount: Long?): List<Long>
+    fun getIdsByFilter(videoId: String?, likeCount: Long?, dislikeCount: Long?): List<Long>
 
-    fun getStatusByFilter(videoId: String?, likeCount: Long?, commentCount: Long?): Boolean
+    fun getExistByFilter(videoId: String?, likeCount: Long?, commentCount: Long?): Boolean
 }
