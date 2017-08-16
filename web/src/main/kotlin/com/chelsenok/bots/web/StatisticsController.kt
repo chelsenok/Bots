@@ -62,8 +62,7 @@ class StatisticsController {
 
 //    TEST
 
-//    GRAPHQL=
-
+//    GRAPHQL
 
     @RequestMapping(value = "/graphql")
     fun graphql(@RequestBody body: Map<*, *>): Map<*, *> {
