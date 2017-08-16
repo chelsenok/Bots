@@ -1,68 +1,31 @@
 package com.chelsenok.bots.web
 
-import com.chelsenok.bots.service.StatisticsService
-import com.chelsenok.bots.service.dtos.StatInfoGet
-import com.chelsenok.bots.service.dtos.VideoPost
 import graphql.ExecutionResult
 import graphql.GraphQL
 import graphql.GraphQLError
 import graphql.language.OperationDefinition
 import graphql.parser.Parser
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.validation.BindingResult
-import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 
 @Suppress("UNCHECKED_CAST")
 @RestController
 class StatisticsController {
 
-    @Autowired
-    private lateinit var statisticsService: StatisticsService
+//    @GetMapping(value = "/reports")
+//    fun getStats(@RequestParam id: String): ResponseEntity<List<StatInfoGet>> {
+//        return if (statisticsService.isVideoExists(id)) {
+//            ResponseEntity(statisticsService.getAllStatsInfoByVideoId(id), HttpStatus.OK)
+//        } else {
+//            ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+//        }
+//    }
 
     @Autowired
     private lateinit var graphQL: GraphQL
-
-    @PostMapping(value = "/reports")
-    fun postVideo(
-            @Valid
-            @RequestBody
-            video: VideoPost,
-
-            result: BindingResult
-    ): ResponseEntity<Unit> {
-        return if (!result.hasErrors() && statisticsService.isVideoValid(video.id)) {
-            statisticsService.addVideo(video)
-            ResponseEntity.ok(null)
-        } else {
-            ResponseEntity.badRequest().body(null)
-        }
-    }
-
-    @GetMapping(value = "/reports")
-    fun getStats(@RequestParam id: String): ResponseEntity<List<StatInfoGet>> {
-        return if (statisticsService.isVideoExists(id)) {
-            ResponseEntity(statisticsService.getAllStatsInfoByVideoId(id), HttpStatus.OK)
-        } else {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
-        }
-    }
-
-//    TEST
-
-    @GetMapping(value = "/")
-    fun getStatus(
-            @RequestParam videoId: String,
-            @RequestParam likeCount: Long,
-            @RequestParam commentCount: Long
-    ) = statisticsService.getStatusByFilter(videoId, likeCount, commentCount)
-
-//    TEST
-
-//    GRAPHQL
 
     @RequestMapping(value = "/graphql")
     fun graphql(@RequestBody body: Map<*, *>): Map<*, *> {
@@ -106,7 +69,4 @@ class StatisticsController {
             )
         }
     }
-
-//    GRAPHQL
-
 }

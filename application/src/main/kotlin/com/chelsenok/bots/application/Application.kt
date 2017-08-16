@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.modelmapper.ModelMapper
 import org.modelmapper.convention.MatchingStrategies
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -42,8 +43,8 @@ open class Application {
     open fun logger(): Logger = LogManager.getLogger()
 
     @Bean
-    open fun graphQL(): GraphQL = GraphQL.newGraphQL(
-            AppSchema().build()
+    open fun graphQL(@Autowired appSchema: AppSchema): GraphQL = GraphQL.newGraphQL(
+            appSchema.build()
     ).build()
 }
 

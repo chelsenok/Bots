@@ -11,8 +11,6 @@ import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
-import javax.persistence.criteria.Join
-import javax.persistence.criteria.JoinType
 import javax.persistence.criteria.Predicate
 
 @Service
@@ -50,7 +48,7 @@ class StatisticsServiceImpl : StatisticsService {
 
 //    TEST
 
-    override fun getIdByFilter(videoId: String?, likeCount: Long?, dislikeCount: Long?): List<Long> {
+    override fun getIdsByFilter(videoId: String?, likeCount: Long?, dislikeCount: Long?): List<Long> {
         val builder = em.criteriaBuilder
         val query = builder.createQuery(Report::class.java)
         val root = query.from(Report::class.java)
@@ -65,7 +63,7 @@ class StatisticsServiceImpl : StatisticsService {
         return em.createQuery(query.select(root)).resultList.map { it -> it.id }
     }
 
-    override fun getStatusByFilter(videoId: String?, likeCount: Long?, commentCount: Long?): Boolean {
+    override fun getExistByFilter(videoId: String?, likeCount: Long?, commentCount: Long?): Boolean {
         val builder = em.criteriaBuilder
         val query = builder.createQuery(Video::class.java)
         val root = query.from(Video::class.java)
