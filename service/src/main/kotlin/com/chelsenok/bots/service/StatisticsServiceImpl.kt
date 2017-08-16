@@ -46,8 +46,6 @@ class StatisticsServiceImpl : StatisticsService {
         videoRepository.saveAndFlush(video)
     }
 
-//    TEST
-
     override fun getIdsByFilter(videoId: String?, likeCount: Long?, dislikeCount: Long?): List<Long> {
         val builder = em.criteriaBuilder
         val query = builder.createQuery(Report::class.java)
@@ -85,7 +83,5 @@ class StatisticsServiceImpl : StatisticsService {
         query.where(builder.and(*array.toTypedArray()))
         return !em.createQuery(query.select(root)).resultList.isEmpty()
     }
-
-//    TEST
 
 }

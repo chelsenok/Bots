@@ -15,15 +15,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class StatisticsController {
 
-//    @GetMapping(value = "/reports")
-//    fun getStats(@RequestParam id: String): ResponseEntity<List<StatInfoGet>> {
-//        return if (statisticsService.isVideoExists(id)) {
-//            ResponseEntity(statisticsService.getAllStatsInfoByVideoId(id), HttpStatus.OK)
-//        } else {
-//            ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
-//        }
-//    }
-
     @Autowired
     private lateinit var graphQL: GraphQL
 
@@ -37,7 +28,7 @@ class StatisticsController {
         var result: ExecutionResult
         val variables = body["variables"] as Map<String, Any>?
         val query = body["query"] as String?
-        if (operations.isEmpty()) {
+        if (operations.isEmpty() || operations.contains("IntrospectionQuery")) {
             result = if (variables == null) {
                 graphQL.execute(query)
             } else {
