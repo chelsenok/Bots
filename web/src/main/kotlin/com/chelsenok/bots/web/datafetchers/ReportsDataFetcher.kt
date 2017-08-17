@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class ReportsDataFetcher : DataFetcher<List<StatInfoGet>> {
+open class ReportsDataFetcher : DataFetcher<List<StatInfoGet>> {
 
     @Autowired
     private lateinit var statisticsService: StatisticsService
@@ -27,11 +27,5 @@ class ReportsDataFetcher : DataFetcher<List<StatInfoGet>> {
         } else {
             null
         }
-//            statisticsService.getVideo(
-//                    id,
-//                    p0.getArgument<Long>(Arguments.FROM.string),
-//                    p0.getArgument<Long>(Arguments.OFFSET.string),
-//                    p0.getArgument<Long>(Arguments.TO.string)
-//            )
     }
 }

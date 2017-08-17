@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service
 import javax.persistence.EntityManager
 import javax.persistence.criteria.Predicate
 
+@Suppress("UNUSED_EXPRESSION")
 @Service
 class StatisticsServiceImpl : StatisticsService {
+
     @Autowired
     private lateinit var reportRepository: ReportRepository
 
@@ -34,9 +36,9 @@ class StatisticsServiceImpl : StatisticsService {
     override fun isVideoExists(id: String) = videoRepository.exists(id)
 
     override fun getAllStatsInfoByVideoId(videoId: String): List<StatInfoGet> {
-        return ArrayList<StatInfoGet>(videoRepository.findOne(videoId).reports.map { stat ->
+        return videoRepository.findOne(videoId).reports.map { stat ->
             modelMapper.map(stat, StatInfoGet::class.java)
-        })
+        }
     }
 
     override fun isVideoValid(v: String) = !isVideoExists(v) && youtube.isVideoExists(v)
@@ -53,37 +55,21 @@ class StatisticsServiceImpl : StatisticsService {
     }
 
     override fun getFilteredStatsInfo(list: List<StatInfoGet>, from: Long?, offset: Long?, to: Long?): List<StatInfoGet> {
+        val coeff = offset?.div(60000)?.toInt()
+        var count = 0
         return list.filter { it ->
-            val fromPredicate: Boolean = if (from == null) true else it.time >= from
-            val toPredicate: Boolean = if (to == null) true else it.time <= to
-            fromPredicate && toPredicate
+            val array = booleanArrayOf(
+                    if (from == null) true else it.time >= from,
+                    if (to == null) true else it.time <= to,
+                    if (coeff == null || coeff == 0) true else count % coeff == 0
+            )
+            count++
+            !array.contains(false)
         }
     }
 
     override fun getVideo(id: String): VideoGet? {
         return modelMapper.map(videoRepository.findOne(id), VideoGet::class.java)
-//        val builder = em.criteriaBuilder
-//        val query = builder.createQuery(Video::class.java)
-//        val root = query.from(Video::class.java)
-//
-//        val array = arrayListOf<Predicate>()
-//
-//        array.add(builder.equal(root.get<String>("id"), id))
-//        val join = root.join<Video, Report>("reports")
-//        if (from != null) array.add(builder.greaterThanOrEqualTo(join.get<Long>("time"), from))
-//        if (to != null) array.add(builder.lessThanOrEqualTo(join.get<Long>("time"), to))
-//        query.where(builder.and(*array.toTypedArray()))
-//        return try {
-//            val response = modelMapper.map(em.createQuery(query.select(root)).singleResult, VideoGet::class.java)
-//            val coeff = offset?.div(60000.toFloat())
-//            if (offset == null || coeff!! < 1) {
-//                response
-//            } else {
-//                throw Exception()
-//            }
-//        } catch (e: Exception) {
-//            null
-//        }
     }
 
     override fun getIdsByFilter(videoId: String, likeCount: Long?, dislikeCount: Long?): List<Long> {
