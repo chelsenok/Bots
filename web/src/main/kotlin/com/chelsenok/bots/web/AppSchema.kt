@@ -1,6 +1,7 @@
 package com.chelsenok.bots.web
 
 import com.chelsenok.bots.web.fields.StatsField
+import com.chelsenok.bots.web.fields.VideoField
 import com.chelsenok.bots.web.fields.VideoPostField
 import graphql.schema.GraphQLObjectType
 import graphql.schema.GraphQLSchema
@@ -17,12 +18,16 @@ class AppSchema : GraphQLSchema.Builder(), InitializingBean {
     @Autowired
     private lateinit var statsField: StatsField
 
+    @Autowired
+    private lateinit var videoField: VideoField
+
     override fun afterPropertiesSet() {
         this
                 .query(
                         GraphQLObjectType.newObject()
                                 .name("query")
                                 .field(statsField)
+                                .field(videoField)
                                 .build()
                 )
                 .mutation(

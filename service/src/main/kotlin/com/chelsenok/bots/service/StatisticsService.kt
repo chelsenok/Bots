@@ -1,6 +1,7 @@
 package com.chelsenok.bots.service
 
 import com.chelsenok.bots.service.dtos.StatInfoGet
+import com.chelsenok.bots.service.dtos.VideoGet
 import com.chelsenok.bots.service.dtos.VideoPost
 
 interface StatisticsService {
@@ -13,7 +14,13 @@ interface StatisticsService {
 
     fun isVideoExists(id: String): Boolean
 
-    fun getIdsByFilter(videoId: String?, likeCount: Long?, dislikeCount: Long?): List<Long>
+    fun getIdsByFilter(videoId: String, likeCount: Long?, dislikeCount: Long?): List<Long>
 
-    fun getExistByFilter(videoId: String?, likeCount: Long?, commentCount: Long?): Boolean
+    fun getExistByFilter(videoId: String, likeCount: Long?, commentCount: Long?): Boolean
+
+    fun getAllStatsInfo(id: String?, from: Long?, offset: Long?, to: Long?): List<StatInfoGet>
+
+    fun getVideo(id: String): VideoGet?
+
+    fun getFilteredStatsInfo(list: List<StatInfoGet>, from: Long?, offset: Long?, to: Long?): List<StatInfoGet>
 }

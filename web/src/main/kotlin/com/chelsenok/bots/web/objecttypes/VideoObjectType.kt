@@ -1,0 +1,45 @@
+package com.chelsenok.bots.web.objecttypes
+
+import com.chelsenok.bots.web.Arguments
+import com.chelsenok.bots.web.datafetchers.ReportsDataFetcher
+import com.chelsenok.bots.web.datafetchers.VideoDataFetcher
+import graphql.schema.GraphQLArgument
+import graphql.schema.GraphQLFieldDefinition
+import graphql.schema.GraphQLList
+import graphql.schema.GraphQLObjectType
+import org.springframework.beans.factory.InitializingBean
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.stereotype.Component
+
+@Component
+class VideoObjectType : GraphQLObjectType.Builder(), InitializingBean {
+
+    @Autowired
+    @Qualifier("report")
+    private lateinit var report: ReportObjectType
+
+    @Autowired
+    private lateinit var reportsDataFetcher: ReportsDataFetcher
+
+    override fun afterPropertiesSet() {
+        this
+                .name("Video")
+                .field(GraphQLFieldDefinition.newFieldDefinition()
+                        .name("reports")
+                        .type(GraphQLList.list(report.build()))
+                        .argument(GraphQLArgument.newArgument()
+                                .name(Arguments.FROM.string)
+                                .type(Arguments.FROM.type)
+                        )
+                        .argument(GraphQLArgument.newArgument()
+                                .name(Arguments.OFFSET.string)
+                                .type(Arguments.OFFSET.type)
+                        )
+                        .argument(GraphQLArgument.newArgument()
+                                .name(Arguments.TO.string)
+                                .type(Arguments.TO.type)
+                        )
+                        .dataFetcher(reportsDataFetcher))
+    }
+}

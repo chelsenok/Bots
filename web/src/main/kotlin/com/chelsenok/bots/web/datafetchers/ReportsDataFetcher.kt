@@ -2,6 +2,7 @@ package com.chelsenok.bots.web.datafetchers
 
 import com.chelsenok.bots.service.StatisticsService
 import com.chelsenok.bots.service.dtos.StatInfoGet
+import com.chelsenok.bots.service.dtos.VideoGet
 import com.chelsenok.bots.web.Arguments
 import graphql.schema.DataFetcher
 import graphql.schema.DataFetchingEnvironment
@@ -9,15 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class StatsDataFetcher : DataFetcher<List<StatInfoGet>> {
+class ReportsDataFetcher : DataFetcher<List<StatInfoGet>> {
 
     @Autowired
     private lateinit var statisticsService: StatisticsService
 
     override fun get(p0: DataFetchingEnvironment?): List<StatInfoGet>? {
-        return if (p0 != null) {
-            statisticsService.getAllStatsInfo(
-                    p0.getArgument<String>(Arguments.ID.string),
+        val list = p0?.getSource<VideoGet>()?.reports
+        return if (list != null) {
+            statisticsService.getFilteredStatsInfo(
+                    list,
                     p0.getArgument<Long>(Arguments.FROM.string),
                     p0.getArgument<Long>(Arguments.OFFSET.string),
                     p0.getArgument<Long>(Arguments.TO.string)
@@ -25,5 +27,11 @@ class StatsDataFetcher : DataFetcher<List<StatInfoGet>> {
         } else {
             null
         }
+//            statisticsService.getVideo(
+//                    id,
+//                    p0.getArgument<Long>(Arguments.FROM.string),
+//                    p0.getArgument<Long>(Arguments.OFFSET.string),
+//                    p0.getArgument<Long>(Arguments.TO.string)
+//            )
     }
 }
