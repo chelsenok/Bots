@@ -20,6 +20,10 @@ class VideoObjectType : GraphQLObjectType.Builder(), InitializingBean {
     private lateinit var report: ReportObjectType
 
     @Autowired
+    @Qualifier("fixedRate")
+    private var fixedRate: Long = 0
+
+    @Autowired
     private lateinit var reportsDataFetcher: ReportsDataFetcher
 
     override fun afterPropertiesSet() {
@@ -35,6 +39,7 @@ class VideoObjectType : GraphQLObjectType.Builder(), InitializingBean {
                         .argument(GraphQLArgument.newArgument()
                                 .name(Arguments.OFFSET.string)
                                 .type(Arguments.OFFSET.type)
+                                .defaultValue(fixedRate)
                         )
                         .argument(GraphQLArgument.newArgument()
                                 .name(Arguments.TO.string)

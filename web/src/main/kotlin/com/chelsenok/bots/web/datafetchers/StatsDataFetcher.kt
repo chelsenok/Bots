@@ -14,16 +14,12 @@ class StatsDataFetcher : DataFetcher<List<StatInfoGet>> {
     @Autowired
     private lateinit var statisticsService: StatisticsService
 
-    override fun get(p0: DataFetchingEnvironment?): List<StatInfoGet>? {
-        return if (p0 != null) {
+    override fun get(p0: DataFetchingEnvironment?): List<StatInfoGet>? =
             statisticsService.getAllStatsInfo(
-                    p0.getArgument<String>(Arguments.ID.string),
-                    p0.getArgument<Long>(Arguments.FROM.string),
-                    p0.getArgument<Long>(Arguments.OFFSET.string),
-                    p0.getArgument<Long>(Arguments.TO.string)
+                    p0?.getArgument<ArrayList<String>>(Arguments.IDS.string),
+                    p0?.getArgument<Long>(Arguments.FROM.string),
+                    p0?.getArgument<Long>(Arguments.OFFSET.string),
+                    p0?.getArgument<Long>(Arguments.TO.string)
             )
-        } else {
-            null
-        }
-    }
+
 }

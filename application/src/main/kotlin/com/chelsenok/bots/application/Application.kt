@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger
 import org.modelmapper.ModelMapper
 import org.modelmapper.convention.MatchingStrategies
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -38,6 +39,9 @@ open class Application {
 
     @Bean
     open fun youtube() = YouTube()
+
+    @Bean("fixedRate")
+    open fun fixedRate(): Long = 60000
 
     @Bean
     open fun logger(): Logger = LogManager.getLogger()
