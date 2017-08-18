@@ -33,7 +33,8 @@ class Report {
     var commentCount: Long = 0
 
     @ManyToOne
-    @JoinColumn(name = "video_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "video_id", referencedColumnName = "id", insertable = false,
+            updatable = false)
     lateinit var video: Video
 
 }

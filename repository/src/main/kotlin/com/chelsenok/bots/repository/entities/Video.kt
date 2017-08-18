@@ -10,7 +10,8 @@ class Video {
     @Column(name = "id", length = 15, nullable = false, unique = true)
     lateinit var id: String
 
-    @OneToMany(mappedBy = "video", cascade = arrayOf(CascadeType.MERGE, CascadeType.REMOVE), fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "video", cascade = arrayOf(CascadeType.MERGE, CascadeType.REMOVE),
+            fetch = FetchType.EAGER)
     lateinit var reports: List<Report>
 }
 

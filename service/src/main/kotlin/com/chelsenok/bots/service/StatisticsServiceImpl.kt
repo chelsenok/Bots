@@ -57,7 +57,11 @@ class StatisticsServiceImpl : StatisticsService {
         videoRepository.saveAndFlush(video)
     }
 
-    override fun getAllStatsInfo(ids: ArrayList<String>?, from: Long?, offset: Long?, to: Long?): List<StatInfoGet> {
+    override fun getAllStatsInfo(ids: ArrayList<String>?,
+                                 from: Long?,
+                                 offset: Long?,
+                                 to: Long?
+    ): List<StatInfoGet> {
         val builder = em.criteriaBuilder
         val query = builder.createQuery(Report::class.java)
         val root = query.from(Report::class.java)
@@ -88,11 +92,18 @@ class StatisticsServiceImpl : StatisticsService {
             offset: Long?
     ): List<StatInfoGet> {
         query.where(builder.and(*array.toTypedArray()))
-        val response = em.createQuery(query.select(root)).resultList.map { it -> modelMapper.map(it, StatInfoGet::class.java) }
+        val response = em.createQuery(query.select(root)).resultList.map { it ->
+            modelMapper.map(it, StatInfoGet::class.java)
+        }
         return if (offset == null) response else filterListByOffset(response, fixedRate, offset)
     }
 
-    override fun getFilteredStatsInfo(list: List<StatInfoGet>, from: Long?, offset: Long?, to: Long?): List<StatInfoGet> {
+    override fun getFilteredStatsInfo(
+            list: List<StatInfoGet>,
+            from: Long?,
+            offset: Long?,
+            to: Long?
+    ): List<StatInfoGet> {
         val response = list.filter { it ->
             val array = booleanArrayOf(
                     if (from == null) true else it.time >= from,

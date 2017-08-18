@@ -18,10 +18,12 @@ interface StatisticsService {
 
     fun getExistByFilter(videoId: String, likeCount: Long?, commentCount: Long?): Boolean
 
-    fun getAllStatsInfo(ids: ArrayList<String>?, from: Long?, offset: Long?, to: Long?): List<StatInfoGet>
+    fun getAllStatsInfo(ids: ArrayList<String>?, from: Long?, offset: Long?,
+                        to: Long?): List<StatInfoGet>
 
     fun getVideo(id: String): VideoGet?
 
-    fun getFilteredStatsInfo(list: List<StatInfoGet>, from: Long?, offset: Long?, to: Long?): List<StatInfoGet>
+    fun getFilteredStatsInfo(list: List<StatInfoGet>, from: Long?, offset: Long?,
+                             to: Long?): List<StatInfoGet>
 
 }
