@@ -80,7 +80,6 @@
 			<version>${kotlin.version}</version>
 		</dependency>
 		<!--KOTLIN-->
-
     </dependencies>
 
 	<build>
@@ -108,6 +107,7 @@
 				</executions>
 				<configuration>
 					<jvmTarget>1.8</jvmTarget>
+					<languageVersion>1.2</languageVersion>
 				</configuration>
 			</plugin>
 		</plugins>

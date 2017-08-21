@@ -124,9 +124,8 @@ class StatisticsServiceImpl : StatisticsService {
         }
     }
 
-    override fun getVideo(id: String): VideoGet? {
-        return modelMapper.map(videoRepository.findOne(id), VideoGet::class.java)
-    }
+    override fun getVideo(id: String): VideoGet? =
+            modelMapper.map(videoRepository.findOne(id), VideoGet::class.java)
 
     override fun getIdsByFilter(videoId: String, likeCount: Long?, dislikeCount: Long?): List<Long> {
         val builder = em.criteriaBuilder

@@ -48,8 +48,7 @@ open class Application {
 
     @Bean
     open fun graphQL(@Autowired appSchema: AppSchema): GraphQL = GraphQL.newGraphQL(
-            appSchema.build()
-    ).build()
+            appSchema.build()).build()
 }
 
 fun main(args: Array<String>) {

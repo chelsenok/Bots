@@ -11,7 +11,7 @@ class Report {
     @Column(name = "id", nullable = false, unique = true)
     var id: Long = 0
 
-    @Column(name = "video_id", nullable = false, unique = false)
+    @Column(name = "video_id", nullable = false, unique = false, length = 15)
     lateinit var videoId: String
 
     @Column(name = "time", nullable = false, unique = false)
