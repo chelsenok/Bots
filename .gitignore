@@ -7,4 +7,5 @@
 target/
 .mvn
 mvnw
+*.jar
 mvnw.cmd
