@@ -1,5 +1,6 @@
 package com.chelsenok.bots.application
 
+import com.chelsenok.bots.service.user.CustomUserDetailsService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
@@ -33,7 +34,7 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
     private lateinit var dataSource: DataSource
 
     @Autowired
-    private lateinit var userDetailsService: UserDetailsService
+    private lateinit var userDetailsService: CustomUserDetailsService
 
     @Bean
     @Primary
