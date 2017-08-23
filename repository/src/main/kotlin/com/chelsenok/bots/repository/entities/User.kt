@@ -1,10 +1,11 @@
 package com.chelsenok.bots.repository.entities
 
+import java.io.Serializable
 import javax.persistence.*
 
 @Entity
 @Table(name = "user", schema = "statistics")
-class User {
+class User: Serializable {
 
     @Id
     @Column(name = "id", nullable = false, unique = true)

@@ -11,7 +11,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider
+
 
 @Configuration
 @EnableWebSecurity
@@ -19,12 +21,22 @@ import org.springframework.security.crypto.password.PasswordEncoder
 open class WebSecurityConfig
 @Autowired
 constructor(
-        private val passwordEncoder: PasswordEncoder,
+        private val passwordEncoder: BCryptPasswordEncoder,
         private val userDetailsService: CustomUserDetailsService
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder)
+        auth.userDetailsService(userDetailsService)
+        auth.authenticationProvider(authenticationProvider())
+    }
+
+
+    @Bean
+    open fun authenticationProvider(): DaoAuthenticationProvider {
+        val authenticationProvider = DaoAuthenticationProvider()
+        authenticationProvider.setUserDetailsService(userDetailsService)
+        authenticationProvider.setPasswordEncoder(passwordEncoder)
+        return authenticationProvider
     }
 
     @Bean

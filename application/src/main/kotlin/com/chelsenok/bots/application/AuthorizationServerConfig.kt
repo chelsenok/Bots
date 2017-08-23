@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
@@ -38,7 +36,7 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
 
     @Bean
     @Primary
-    open fun passwordEncoder(): PasswordEncoder
+    open fun passwordEncoder(): BCryptPasswordEncoder
             = BCryptPasswordEncoder()
 
     @Bean
