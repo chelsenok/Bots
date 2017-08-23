@@ -5,6 +5,7 @@ import graphql.GraphQL
 import org.antlr.v4.runtime.misc.ParseCancellationException
 import org.apache.logging.log4j.Logger
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -31,7 +32,7 @@ class StatisticsController {
                 GraphQLExecutor.getExceptionResponse("Unknown Exception")
             }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/test")
     fun test(): String = "test"
 

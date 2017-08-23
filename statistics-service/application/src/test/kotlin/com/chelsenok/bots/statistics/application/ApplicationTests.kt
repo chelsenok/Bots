@@ -1,4 +1,4 @@
-package com.chelsenok.bots.gateway
+package com.chelsenok.bots.statistics.application
 
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest

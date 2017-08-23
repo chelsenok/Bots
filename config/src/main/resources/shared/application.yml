@@ -1,0 +1,11 @@
+logging:
+  level:
+    org.springframework.security: INFO
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
