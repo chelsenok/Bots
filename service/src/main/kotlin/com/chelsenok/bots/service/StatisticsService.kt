@@ -1,5 +1,6 @@
 package com.chelsenok.bots.service
 
+import com.chelsenok.bots.service.dtos.CurrentUserDto
 import com.chelsenok.bots.service.dtos.StatInfoGet
 import com.chelsenok.bots.service.dtos.VideoGet
 import com.chelsenok.bots.service.dtos.VideoPost
@@ -25,5 +26,7 @@ interface StatisticsService {
 
     fun getFilteredStatsInfo(list: List<StatInfoGet>, from: Long?, offset: Long?,
                              to: Long?): List<StatInfoGet>
+
+    fun getUsersByConsists(s: String): List<CurrentUserDto>
 
 }

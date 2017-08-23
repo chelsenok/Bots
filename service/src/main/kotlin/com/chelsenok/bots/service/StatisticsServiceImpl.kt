@@ -1,9 +1,12 @@
 package com.chelsenok.bots.service
 
 import com.chelsenok.bots.repository.ReportRepository
+import com.chelsenok.bots.repository.UserRepository
 import com.chelsenok.bots.repository.VideoRepository
 import com.chelsenok.bots.repository.entities.Report
+import com.chelsenok.bots.repository.entities.User
 import com.chelsenok.bots.repository.entities.Video
+import com.chelsenok.bots.service.dtos.CurrentUserDto
 import com.chelsenok.bots.service.dtos.StatInfoGet
 import com.chelsenok.bots.service.dtos.VideoGet
 import com.chelsenok.bots.service.dtos.VideoPost
@@ -11,7 +14,7 @@ import com.chelsenok.youtube.YouTube
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors
 import javax.persistence.EntityManager
@@ -23,12 +26,14 @@ import javax.persistence.criteria.Root
 @Suppress("UNUSED_EXPRESSION")
 @Service
 class StatisticsServiceImpl : StatisticsService {
-
     @Autowired
     private lateinit var reportRepository: ReportRepository
 
     @Autowired
     private lateinit var videoRepository: VideoRepository
+
+    @Autowired
+    private lateinit var userRepository: UserRepository
 
     @Autowired
     private lateinit var modelMapper: ModelMapper
@@ -162,4 +167,6 @@ class StatisticsServiceImpl : StatisticsService {
         return !em.createQuery(query.select(root)).resultList.isEmpty()
     }
 
+    override fun getUsersByConsists(s: String): List<CurrentUserDto> =
+            userRepository.getUsersByConsists(s).map { it -> modelMapper.map(it, CurrentUserDto::class.java) }
 }
