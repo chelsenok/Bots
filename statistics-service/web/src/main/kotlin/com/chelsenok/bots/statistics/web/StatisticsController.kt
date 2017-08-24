@@ -24,6 +24,7 @@ open class StatisticsController {
     @RequestMapping(value = "/statistics")
     fun graphql(@RequestBody body: Map<*, *>): Map<*, *> =
             try {
+                logger.error("test")
                 GraphQLExecutor.execute(graphQL, body)
             } catch (e: ParseCancellationException) {
                 GraphQLExecutor.getExceptionResponse(e::class.java.simpleName)

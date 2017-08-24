@@ -26,23 +26,21 @@ Configuration:
     Async:
       - name: com.chelsenok.bots
         AppenderRef:
-          - ref: Console_Appender
           - ref: File_Appender
           - ref: Smtp_Appender
 
   Loggers:
-    Root:
-      level: all
-      AppenderRef:
-        ref: Console_Appender
     AsyncLogger:
       - name: com.chelsenok.bots
         additivity: false
         level: all
         AppenderRef:
-          - ref: Console_Appender
-            level: trace
           - ref: File_Appender
             level: info
-            ref: Smtp_Appender
+          - ref: Smtp_Appender
             level: error
+    Root:
+      level: all
+      AppenderRef:
+        ref: Console_Appender
+
