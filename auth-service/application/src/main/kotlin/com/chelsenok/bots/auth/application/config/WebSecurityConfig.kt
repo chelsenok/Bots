@@ -29,7 +29,6 @@ constructor(
         auth.authenticationProvider(authenticationProvider())
     }
 
-
     @Bean
     open fun authenticationProvider(): DaoAuthenticationProvider {
         val authenticationProvider = DaoAuthenticationProvider()

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @Suppress("UNCHECKED_CAST")
 @RestController
-class StatisticsController {
+open class StatisticsController {
 
     @Autowired
     private lateinit var graphQL: GraphQL

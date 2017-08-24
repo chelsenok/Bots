@@ -24,7 +24,7 @@ class CorsFilter : Filter {
         response.setHeader("Access-Control-Allow-Credentials", "true")
 
         if ("OPTIONS".equals(request.method, ignoreCase = true)) {
-            response.status = HttpServletResponse.SC_OK
+            response.setStatus(HttpServletResponse.SC_OK)
         } else {
             chain.doFilter(req, res)
         }

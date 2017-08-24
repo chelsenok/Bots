@@ -13,17 +13,12 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient
-import org.springframework.cloud.netflix.feign.EnableFeignClients
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 
 @SpringBootApplication
 @EnableJpaRepositories("com.chelsenok.bots.statistics.repository")
@@ -33,11 +28,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableAsync
 @Configuration
 @EnableAutoConfiguration
-@EnableDiscoveryClient
-@EnableResourceServer
-@EnableOAuth2Client
-@EnableFeignClients
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties
 open class Application {
 
