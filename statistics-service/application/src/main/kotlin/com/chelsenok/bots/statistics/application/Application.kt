@@ -12,7 +12,7 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
-import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
@@ -28,7 +28,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableAsync
 @Configuration
 @EnableAutoConfiguration
-@EnableConfigurationProperties
+//@EnableDiscoveryClient
 open class Application {
 
     @Bean
@@ -41,7 +41,7 @@ open class Application {
     @Bean
     open fun youtube() = YouTube()
 
-    @Bean(name = arrayOf("fixedRate"))
+    @Bean(name = ["fixedRate"])
     open fun fixedRate(): Long = 60000
 
     @Bean

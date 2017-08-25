@@ -9,6 +9,12 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <parent>
+        <groupId>com.chelsenok</groupId>
+        <artifactId>bots</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
     <modules>
         <module>repository</module>
         <module>service/youtube</module>

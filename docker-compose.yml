@@ -1,0 +1,29 @@
+version: '2'
+services:
+  config-server:
+    image: chelsenok/config-server
+    container_name: config-server
+    ports:
+     - 8888:8888
+
+  auth-service:
+    image: chelsenok/auth-service
+    container_name: auth-service
+    links:
+     - config-server
+    depends_on:
+     - config-server
+    entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    ports:
+    - 8081:8081
+
+  statistics-service:
+    image: chelsenok/statistics-service
+    container_name: statistics-service
+    links:
+     - config-server
+    depends_on:
+     - config-server
+    entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    ports:
+     - 8082:8082

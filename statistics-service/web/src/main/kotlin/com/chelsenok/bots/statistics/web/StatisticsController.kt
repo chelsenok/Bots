@@ -21,7 +21,7 @@ open class StatisticsController {
     @Autowired
     private lateinit var logger: Logger
 
-    @RequestMapping(value = "/statistics")
+    @RequestMapping(value = "/")
     fun graphql(@RequestBody body: Map<*, *>): Map<*, *> =
             try {
                 logger.error("test")
